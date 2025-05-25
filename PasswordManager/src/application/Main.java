@@ -15,7 +15,6 @@ public class Main {
             System.out.println("Senha segura: " + password);
         }
 		
-		
 		/*
 		try {
 			DB.getConnection();
