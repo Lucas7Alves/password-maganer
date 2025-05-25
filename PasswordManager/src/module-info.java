@@ -11,4 +11,5 @@ module PasswordManager {
     requires java.sql; 
     requires jakarta.mail;
     requires jakarta.activation;
+	requires java.net.http;
 }
