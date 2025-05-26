@@ -5,11 +5,14 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.entity.User;
+
 public class AuthenticatorService {
 
     private final Map<String, TokenInfo> tokenStore = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
 
+    
     public String generateToken(String email) {
         int token = 100000 + random.nextInt(900000);
         LocalDateTime expiresAt = LocalDateTime.now().plusMinutes(5);

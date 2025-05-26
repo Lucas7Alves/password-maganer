@@ -16,7 +16,7 @@ public class UserTest {
 			DB.getConnection();
 			DB.createSchema();
             // --- TESTE DE CADASTRO ---
-            User newUser = new User("alice", "senha123", "alice@example.com");
+            User newUser = new User("lucas", "senha123", "lucassalvess0909@gmail.com");
             ud.registerUser(newUser);
             System.out.println("Usuário cadastrado com sucesso!");
 

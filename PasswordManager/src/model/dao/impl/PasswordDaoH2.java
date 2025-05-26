@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import model.entity.PasswordEntry;
 import util.DB;
 
@@ -21,7 +23,9 @@ public class PasswordDaoH2 {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, entry.getServiceName());
             stmt.setString(2, entry.getUsername());
-            stmt.setString(3, entry.getPasswordEncrypted());
+            
+            String hashedPassword = BCrypt.hashpw(entry.getPasswordEncrypted(), BCrypt.gensalt());
+            stmt.setString(3, hashedPassword);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
