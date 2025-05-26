@@ -5,13 +5,12 @@ import java.util.Scanner;
 import service.AuthenticatorService;
 import service.EmailService;
 
-public class AuthExample {
+public class Auth2FA {
     public static void main(String[] args) throws Exception {
         AuthenticatorService authService = new AuthenticatorService();
         EmailService emailService = new EmailService();
 
         String email = "leon.sport55@gmail.com";
-
 
         String token = authService.generateToken(email);
         emailService.sendTokenEmail(email, token);
