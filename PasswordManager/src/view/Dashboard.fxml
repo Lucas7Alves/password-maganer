@@ -1,0 +1,20 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+	fx:controller="controller.DashboardController" prefWidth="600"
+	prefHeight="400" style="-fx-background-color: #323624;">
+	<VBox alignment="TOP_CENTER" spacing="20" layoutX="100"
+		layoutY="50">
+		<Label text="Gerenciador de Senhas"
+			style="-fx-font-size: 24; -fx-text-fill: white;" />
+		<Button text="Cadastrar nova senha"
+			onAction="#handleCadastroSenha"
+			style="-fx-background-color: #7828A1; -fx-text-fill: white;" />
+		<Button text="Verificar senha vazada"
+			onAction="#handleVerificarSenha"
+			style="-fx-background-color: #7828A1; -fx-text-fill: white;" />
+		<Button text="Sair" onAction="#handleLogout"
+			style="-fx-background-color: red; -fx-text-fill: white;" />
+	</VBox>
+</AnchorPane>

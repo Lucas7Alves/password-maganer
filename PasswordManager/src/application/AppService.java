@@ -37,6 +37,7 @@ public class AppService {
 	public void run() throws SQLException {
 		System.out.println("🔐 Bem-vindo ao Gerenciador de Senhas Seguras");
 
+		
 		// 1. Login
 		System.out.print("Digite seu e-mail: ");
 		String email = sc.nextLine();

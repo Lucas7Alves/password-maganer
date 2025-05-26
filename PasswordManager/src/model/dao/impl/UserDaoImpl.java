@@ -2,7 +2,10 @@ package model.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -31,13 +34,13 @@ public class UserDaoImpl implements UserDao {
     }
     
 	@Override
-    public boolean validateUser(String username, String password) throws SQLException {
-        String sql = "SELECT password_hash FROM app_user WHERE username = ?";
+    public boolean validateUser(String email, String password) throws SQLException {
+        String sql = "SELECT password_hash FROM app_user WHERE email = ?";
         
         try (Connection conn = DB.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setString(1, username);
+            stmt.setString(1, email);
             var rs = stmt.executeQuery();
             
             if (rs.next()) {
@@ -47,5 +50,26 @@ public class UserDaoImpl implements UserDao {
             return false; 
         }
     }
+	
+    @Override
+    public List<User> findAll() throws SQLException {
+        String sql = "SELECT username, email, password_hash FROM app_user";
+        List<User> users = new ArrayList<>();
+        
+        try (Connection conn = DB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                User user = new User();
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password_hash"));
+                users.add(user);
+            }
+        }
+        return users;
+    }
+
 
 }

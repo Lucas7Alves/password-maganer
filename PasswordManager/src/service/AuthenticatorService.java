@@ -1,41 +1,40 @@
 package service;
 
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
-import model.entity.User;
+import model.dao.impl.TokenDaoImpl;
 
 public class AuthenticatorService {
 
-    private final Map<String, TokenInfo> tokenStore = new HashMap<>();
-    private final SecureRandom random = new SecureRandom();
+	private final SecureRandom random = new SecureRandom();
+	private final TokenDaoImpl tokenDao = new TokenDaoImpl();
 
-    
-    public String generateToken(String email) {
-        int token = 100000 + random.nextInt(900000);
-        LocalDateTime expiresAt = LocalDateTime.now().plusMinutes(5);
-        tokenStore.put(email, new TokenInfo(String.valueOf(token), expiresAt));
-        return String.valueOf(token);
-    }
+	public String generateToken(String email) {
+		int token = 100000 + random.nextInt(900000);
+		String strToken = null;
+		int userId;
+		try {
+			userId = tokenDao.getUserIdByEmail(email);
 
-    public boolean validateToken(String email, String token) {
-        if (!tokenStore.containsKey(email)) return false;
+			strToken = String.valueOf(token);
+			tokenDao.saveToken(userId, strToken);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        TokenInfo info = tokenStore.get(email);
-        if (LocalDateTime.now().isAfter(info.expiresAt)) return false;
 
-        return info.token.equals(token);
-    }
+		return strToken;
+	}
 
-    private static class TokenInfo {
-        String token;
-        LocalDateTime expiresAt;
-
-        TokenInfo(String token, LocalDateTime expiresAt) {
-            this.token = token;
-            this.expiresAt = expiresAt;
-        }
-    }
+	public boolean validateToken(String email, String token) {
+		try {
+			int userId = tokenDao.getUserIdByEmail(email);
+			return tokenDao.validateToken(userId, token);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
