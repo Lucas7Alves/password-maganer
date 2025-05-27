@@ -44,9 +44,13 @@ public class DB {
 					"FOREIGN KEY (user_id) REFERENCES app_user(id))");
 			
 			//table data_user
-			stmt.execute("CREATE TABLE IF NOT EXISTS password_entry (" + "id INT AUTO_INCREMENT PRIMARY KEY,"
-					+ "service_name VARCHAR(100) NOT NULL," + "username VARCHAR(100) NOT NULL,"
-					+ "password_encrypted VARCHAR(255) NOT NULL)");
+			stmt.execute("CREATE TABLE IF NOT EXISTS password_entry (" +
+				    "id INT AUTO_INCREMENT PRIMARY KEY," +
+				    "service_name VARCHAR(100) NOT NULL," +
+				    "username VARCHAR(100) NOT NULL," +
+				    "password_encrypted VARCHAR(255) NOT NULL," +
+				    "user_id INT NOT NULL," +
+				    "FOREIGN KEY (user_id) REFERENCES app_user(id))");
 			System.out.println("Tabela criada ou já existente.");
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,27 +1,61 @@
 package controller;
 
+import java.sql.SQLException;
+
 import javafx.fxml.FXML;
+import model.dao.impl.UserDaoImpl;
+import util.SceneManager;
 
 public class DashboardController {
-	
-	private String userEmail;
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+    private UserDaoImpl userDao = new UserDaoImpl();
+
+    private String userEmail;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+        try {
+			userId = userDao.getUserIdByEmail(userEmail);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+
+	private int userId;
+	public void setUserId(int id) {
+		this.userId = id;
 	}
 
     @FXML
     private void handleCadastroSenha() {
-        // Redirecionar para tela de cadastro de senhas
+        RegisterPasswordController controller = SceneManager.switchSceneWithController("/view/RegisterPassword.fxml");
+        controller.setUserId(userId);
+    }
+
+    @FXML
+    private void handleListarSenhas() {
+        ListPasswordsController controller = SceneManager.switchSceneWithController("/view/ListarPasswordsView.fxml");
+        controller.setUserId(userId);
+    }
+
+    @FXML
+    private void handleExcluirSenha() {
+        DeletePasswordController controller = SceneManager.switchSceneWithController("/view/DeletePasswordView.fxml");
+        controller.setUserId(userId);
+    }
+
+    @FXML
+    private void handleGerarSenhaSegura() {
+        SceneManager.switchScene("/view/GeneratePasswordView.fxml");
+        
     }
 
     @FXML
     private void handleVerificarSenha() {
-        // Redirecionar para tela de verificação de vazamento
+    	SceneManager.switchScene("/view/LeakCheckView.fxml");
     }
 
     @FXML
     private void handleLogout() {
-        // Voltar para tela de login
+        SceneManager.switchScene("/view/Login.fxml");
     }
 }

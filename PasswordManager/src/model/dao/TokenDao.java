@@ -6,5 +6,4 @@ public interface TokenDao {
     void saveToken(int userId, String token) throws SQLException;
     boolean validateToken(int userId, String token) throws SQLException;
     void cleanupExpiredTokens() throws SQLException;
-    int getUserIdByEmail(String email) throws SQLException;
 }

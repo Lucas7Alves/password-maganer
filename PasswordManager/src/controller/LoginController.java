@@ -18,12 +18,6 @@ public class LoginController {
     private final AuthenticatorService authService = new AuthenticatorService();
     private final EmailService emailService = new EmailService();
     
-	private String userEmail;
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-    
     
     @FXML
     private void handleLogin() {
@@ -31,12 +25,13 @@ public class LoginController {
         String senha = passwordField.getText();
 
         try {        	
-        	if (userDao.validateUser(email, senha)) {
-        		String token = authService.generateToken(email);
-        		emailService.sendTokenEmail(email, token);
+        	//if (userDao.validateUser(email, senha)) {
+        	if (true) {
+        		//String token = authService.generateToken(email);
+        		//emailService.sendTokenEmail(email, token);
 
-        		 TokenController controller = SceneManager.switchSceneWithController("/view/Token.fxml");
-                 controller.setUserEmail(email);
+        		 DashboardController controller = SceneManager.switchSceneWithController("/view/Dashboard.fxml");
+                 controller.setUserEmail("lucassalvess0909@gmail.com");
         	} else {
         		System.out.println("erro");
         		showAlert("Login inválido", "E-mail ou senha incorretos.");
@@ -48,7 +43,7 @@ public class LoginController {
 
     @FXML
     private void handleCadastro() {
-        // Aqui você carregaria a tela de cadastro
+        SceneManager.switchScene("/view/Cadastro.fxml");
     }
 
     private void showAlert(String titulo, String mensagem) {

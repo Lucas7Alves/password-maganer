@@ -51,21 +51,4 @@ public class TokenDaoImpl implements TokenDao {
 			stmt.executeUpdate(sql);
 		}
 	}
-
-	@Override
-	public int getUserIdByEmail(String email) throws SQLException {
-		String sql = "SELECT id FROM app_user WHERE email = ?";
-
-		try (Connection conn = DB.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-			stmt.setString(1, email);
-
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
-					return rs.getInt("id");
-				}
-				throw new SQLException("Usuário não encontrado com o email: " + email);
-			}
-		}
-	}
 }

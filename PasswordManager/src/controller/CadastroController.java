@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.dao.impl.UserDaoImpl;
 import model.entity.User;
+import util.SceneManager;
 
 public class CadastroController {
 
@@ -31,15 +32,16 @@ public class CadastroController {
         User user = new User(nome, email, senha);
         try {
 			userDao.registerUser(user);
+			showAlert("Sucesso", "Usuário cadastrado com sucesso.");
 		} catch (SQLException e) {
+			showAlert("Falha", "Usuário já cadastrado.");
 			System.out.println(e.getMessage());
 		}
-        showAlert("Sucesso", "Usuário cadastrado com sucesso.");
     }
 
     @FXML
     private void handleVoltar() {
-        // Voltar para tela de login
+    	SceneManager.switchScene("/view/Login.fxml");
     }
 
     private void showAlert(String titulo, String mensagem) {

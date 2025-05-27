@@ -18,6 +18,7 @@ module PasswordManager {
 
 	opens application to javafx.graphics, javafx.fxml;
 	opens controller to javafx.fxml;
+	opens model.entity to javafx.base;
 	
     exports application;
 }
