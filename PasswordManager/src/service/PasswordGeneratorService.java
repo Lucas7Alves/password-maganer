@@ -33,7 +33,6 @@ public class PasswordGeneratorService {
 	}
 
 	private char getRandomChar(String chars) {
-		System.out.println("olá");
 		int index = random.nextInt(chars.length());
 		return chars.charAt(index);
 	}

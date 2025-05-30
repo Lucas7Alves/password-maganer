@@ -47,7 +47,6 @@ public class PasswordLeakService {
             );
 
             if (response.statusCode() == 200) {
-                System.out.println("Resposta da API: " + response.body());
                 
                 return response.body()
                         .anyMatch(line -> line.startsWith(suffix));
