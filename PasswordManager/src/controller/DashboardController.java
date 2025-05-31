@@ -20,8 +20,8 @@ public class DashboardController {
 		}
     }
 
-	private int userId;
-	public void setUserId(int id) {
+	private String userId;
+	public void setUserId(String id) {
 		this.userId = id;
 	}
 

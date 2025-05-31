@@ -14,5 +14,5 @@ public interface UserDao {
 
 	List<User> findAll() throws SQLException;
 
-	int getUserIdByEmail(String email) throws SQLException;
+	String getUserIdByEmail(String email) throws SQLException;
 }

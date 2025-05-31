@@ -25,9 +25,9 @@ public class ListPasswordsController {
 
 	private final PasswordDaoH2 dao = new PasswordDaoH2();
 
-	private int userId;
+	private String userId;
 
-	public void setUserId(int id) {
+	public void setUserId(String id) {
 		this.userId = id;
 		loadPasswords();
 	}

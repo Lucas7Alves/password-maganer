@@ -7,6 +7,6 @@ import model.entity.PasswordEntry;
 public interface PasswordDao {
 	
 	void save(PasswordEntry entry, String userId);
-	List<PasswordEntry> findAllByUserId(int userId);
-	boolean deleteByServiceName(int userId, String serviceName);
+	boolean deleteByServiceName(String userId, String serviceName);
+	List<PasswordEntry> findAllByUserId(String userId);
 }

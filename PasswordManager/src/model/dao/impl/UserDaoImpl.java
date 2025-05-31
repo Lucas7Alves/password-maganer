@@ -70,7 +70,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int getUserIdByEmail(String email) throws SQLException {
+	public String getUserIdByEmail(String email) throws SQLException {
 		String sql = "SELECT id FROM app_user WHERE email = ?";
 
 		try (Connection conn = DB.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -79,7 +79,7 @@ public class UserDaoImpl implements UserDao {
 
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
-					return rs.getInt("id");
+					return rs.getString("id");
 				}
 				throw new SQLException("Usuário não encontrado com o email: " + email);
 			}

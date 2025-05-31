@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import util.DB;
 import util.SceneManager;
 
+
 public class Main extends Application {
 
 	@Override

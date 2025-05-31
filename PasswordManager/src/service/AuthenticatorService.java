@@ -15,7 +15,7 @@ public class AuthenticatorService {
 	public String generateToken(String email) {
 		int token = 100000 + random.nextInt(900000);
 		String strToken = null;
-		int userId;
+		String userId;
 		try {
 			userId = userDao.getUserIdByEmail(email);
 
@@ -31,7 +31,7 @@ public class AuthenticatorService {
 
 	public boolean validateToken(String email, String token) {
 		try {
-			int userId = userDao.getUserIdByEmail(email);
+			String userId = userDao.getUserIdByEmail(email);
 			return tokenDao.validateToken(userId, token);
 		} catch (Exception e) {
 			e.printStackTrace();

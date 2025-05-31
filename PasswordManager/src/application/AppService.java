@@ -73,24 +73,31 @@ public class AppService {
 			System.out.println("0 - Sair");
 			System.out.print("Escolha uma opção: ");
 			opcao = InputUtil(sc);
+			
+			String uid = String.valueOf(userDao.getUserIdByEmail(email));
 
+			String serviceName = null;
+			String username = null;
+			String novaSenha = null;
+			
+			
 			switch (opcao) {
 			case 1:
 				System.out.print("Nome do serviço: ");
-				String serviceName = sc.nextLine();
+				serviceName = sc.nextLine();
 				System.out.print("Username: ");
-				String username = sc.nextLine();
+				username = sc.nextLine();
 				System.out.print("Senha: ");
-				String novaSenha = sc.nextLine();
+				novaSenha = sc.nextLine();
 				PasswordEntry pe = new PasswordEntry(serviceName, username, novaSenha);
-				passwordDaoH2.save(pe);
+				passwordDaoH2.save(pe, uid);
 				break;
 			case 2:
-				System.out.println(passwordDaoH2.findAll());
+				System.out.println(passwordDaoH2.findAllByUserId(uid));
 				break;
 			case 3:
 				System.out.print("ID da senha a excluir: ");
-				passwordDaoH2.deleteById(sc.nextInt());
+				passwordDaoH2.deleteByServiceName(uid, serviceName);
 				break;
 			case 4:
 				System.out.print("Senha de quantos digitos?");

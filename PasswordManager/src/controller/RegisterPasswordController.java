@@ -24,9 +24,9 @@ public class RegisterPasswordController {
 
 	private final PasswordDaoH2 passwordDaoH2 = new PasswordDaoH2();
 
-	private int userId;
+	private String userId;
 
-	public void setUserId(int id) {
+	public void setUserId(String id) {
 		this.userId = id;
 	}
 

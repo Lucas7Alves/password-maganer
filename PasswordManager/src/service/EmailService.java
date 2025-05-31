@@ -10,11 +10,12 @@ import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import util.ConfigLoader;
 
 public class EmailService {
-
-	private final String from = System.getenv("EMAIL_FROM");
-	private final String password = System.getenv("EMAIL_PASSWORD");
+	
+	private final String from;
+	private final String password;
 
     public void sendTokenEmail(String to, String token) {
         Properties props = new Properties();
@@ -43,4 +44,10 @@ public class EmailService {
             throw new RuntimeException(e);
         }
     }
+    
+	public EmailService() {
+		Properties config = ConfigLoader.getProperties();
+		this.from = config.getProperty("EMAIL_FROM");
+		this.password = config.getProperty("EMAIL_PASSWORD");
+	}
 }

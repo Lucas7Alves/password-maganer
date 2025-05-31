@@ -30,13 +30,13 @@ public class PasswordDaoH2 implements PasswordDao {
 	}
 
     @Override
-	public List<PasswordEntry> findAllByUserId(int userId) {
+	public List<PasswordEntry> findAllByUserId(String userId) {
 	    List<PasswordEntry> list = new ArrayList<>();
 	    String sql = "SELECT * FROM password_entry WHERE user_id = ?";
 
 	    try (Connection conn = DB.getConnection();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
-	        ps.setInt(1, userId);
+	        ps.setString(1, userId);
 	        ResultSet rs = ps.executeQuery();
 
 	        while (rs.next()) {
@@ -55,10 +55,10 @@ public class PasswordDaoH2 implements PasswordDao {
 	}    
 
     @Override
-    public boolean deleteByServiceName(int userId, String serviceName) {
+    public boolean deleteByServiceName(String userId, String serviceName) {
     	String sql = "DELETE FROM password_entry WHERE user_id = ? AND service_name = ?";
     	try (Connection conn = DB.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-    		stmt.setInt(1, userId);
+    		stmt.setString(1, userId);
     		stmt.setString(2, serviceName);
     		return stmt.executeUpdate() > 0;
     	} catch (SQLException e) {
