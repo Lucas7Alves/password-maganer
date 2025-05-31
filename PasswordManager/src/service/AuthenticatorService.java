@@ -29,10 +29,9 @@ public class AuthenticatorService {
 		return strToken;
 	}
 
-	public boolean validateToken(String email, String token) {
+	public boolean validateToken(String userUid, String token) {
 		try {
-			String userId = userDao.getUserIdByEmail(email);
-			return tokenDao.validateToken(userId, token);
+			return tokenDao.validateToken(userUid, token);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

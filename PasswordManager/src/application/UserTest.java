@@ -23,16 +23,16 @@ public class UserTest {
             
 			
 			// --- TESTE DE CADASTRO ---
-            User newUser = new User("lucas", "senha123", "lucassalvess0909@gmail.com");
+            User newUser = new User("gato", "123", "gato@gmail.com");
             ud.registerUser(newUser);
             System.out.println("Usuário cadastrado com sucesso!");
 
             // --- TESTE DE LOGIN ---
-            boolean loginSuccess = ud.validateUser("lucassalvess0909@gmail.com", "senha123");
+            boolean loginSuccess = ud.validateUser("gato@gmail.com", "senha123");
             System.out.println(loginSuccess ? "✅ Login válido!" : "❌ Login inválido!");
 
             // --- TESTE DE SENHA INCORRETA ---
-            boolean loginFail = ud.validateUser("alice", "senha_errada");
+            boolean loginFail = ud.validateUser("gato", "senha_errada");
             System.out.println(loginFail ? "✅ Login válido (ERRO!)" : "❌ Login inválido (CORRETO!)");
 		
         } catch (SQLException e) {

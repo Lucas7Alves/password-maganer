@@ -29,7 +29,7 @@ public class CadastroController {
             return;
         }
 
-        User user = new User(nome, email, senha);
+        User user = new User(nome, senha, email);
         try {
 			userDao.registerUser(user);
 			showAlert("Sucesso", "Usuário cadastrado com sucesso.");

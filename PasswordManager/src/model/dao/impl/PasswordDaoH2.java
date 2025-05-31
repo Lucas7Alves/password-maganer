@@ -66,6 +66,4 @@ public class PasswordDaoH2 implements PasswordDao {
     	}
     	return false;
     }
-
-
 }

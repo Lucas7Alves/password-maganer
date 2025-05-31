@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import model.dao.TokenDao;
+import model.dao.UserDao;
+import model.dao.impl.TokenDaoImpl;
 import model.dao.impl.UserDaoImpl;
 import service.AuthenticatorService;
 import service.EmailService;
@@ -14,9 +17,10 @@ public class LoginController {
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
 
-    private final UserDaoImpl userDao = new UserDaoImpl();
+    private final UserDao userDao = new UserDaoImpl();
     private final AuthenticatorService authService = new AuthenticatorService();
     private final EmailService emailService = new EmailService();
+    private final TokenDao tokenDao = new TokenDaoImpl();
     
     
     @FXML
@@ -25,16 +29,17 @@ public class LoginController {
         String senha = passwordField.getText();
 
         try {        	
-        	//if (userDao.validateUser(email, senha)) {
-        	if (true) {
-        		//String token = authService.generateToken(email);
-        		//emailService.sendTokenEmail(email, token);
+        	if (userDao.validateUser(email, senha)) {
+        		String token = authService.generateToken(email);
+        		emailService.sendTokenEmail(email, token);
+        		tokenDao.saveToken(userDao.getUserIdByEmail(email), token);
 
-        		 DashboardController controller = SceneManager.switchSceneWithController("/view/Dashboard.fxml");
-                 controller.setUserEmail("lucassalvess0909@gmail.com");
+        		 TokenController controller = SceneManager.switchSceneWithController("/view/Token.fxml");
+                 controller.setUserEmail(email);
         	} else {
         		System.out.println("erro");
         		showAlert("Login inválido", "E-mail ou senha incorretos.");
+        		System.out.println(userDao.findAll());
         	}
         } catch (Exception e) {
         	System.err.println(e.getMessage());
