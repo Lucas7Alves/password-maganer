@@ -1,7 +1,5 @@
 package controller;
 
-import java.sql.SQLException;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -9,39 +7,55 @@ import model.dao.UserDao;
 import model.dao.impl.UserDaoImpl;
 import service.AuthenticatorService;
 import util.SceneManager;
+import util.SecurityUtils;
+import util.UserSession;
 
 public class TokenController {
 
-	@FXML
-	private TextField tokenField;
+    @FXML private TextField tokenField;
 
-	private final AuthenticatorService authService = new AuthenticatorService();
-	private final UserDao userDao = new UserDaoImpl();
-	private String userEmail;
+    private final AuthenticatorService authService = new AuthenticatorService();
+    private final UserDao userDao = new UserDaoImpl();
+    private final UserSession session = UserSession.getInstance();
 
-	public void setUserEmail(String email) {
-		this.userEmail = email;
-	}
+    public void setUserEmail(String email) {
+        SecurityUtils.validateEmail(email);
+        session.initSession(null, email); // Armazena email temporariamente
+    }
 
-	@FXML
-	private void handleVerificar() {
-		String token = tokenField.getText();
-		try {
-			if (authService.validateToken(userDao.getUserIdByEmail(userEmail), token)) {
-				DashboardController controller = SceneManager.switchSceneWithController("/view/Dashboard.fxml");
-				controller.setUserEmail(userEmail);
-			} else {
-				showAlert("Token inválido", "O token inserido é inválido ou expirou.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    @FXML
+    private void handleVerificar() {
+        try {
+            String token = SecurityUtils.sanitizeToken(tokenField.getText());
+            SecurityUtils.validateToken(token);
+            
+            String userEmail = session.getUserEmail();
+            String userId = userDao.getUserIdByEmail(userEmail);
+            
+            if (userId == null || Integer.valueOf(userId) <= 0) {
+                throw new IllegalStateException("Usuário não encontrado");
+            }
 
-	private void showAlert(String titulo, String mensagem) {
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle(titulo);
-		alert.setContentText(mensagem);
-		alert.showAndWait();
-	}
+            if (authService.validateToken(userId, token)) {
+                // Inicia sessão completa com userId e email
+                session.initSession(userId, userEmail);
+                SceneManager.switchScene("/view/Dashboard.fxml");
+            } else {
+                showAlert("Token inválido", "O token inserido é inválido ou expirou.", Alert.AlertType.ERROR);
+            }
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            showAlert("Erro de Validação", e.getMessage(), Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            showAlert("Erro", "Ocorreu um erro inesperado: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String titulo, String mensagem, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
 }

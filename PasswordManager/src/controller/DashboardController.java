@@ -1,61 +1,64 @@
 package controller;
 
-import java.sql.SQLException;
-
 import javafx.fxml.FXML;
-import model.dao.impl.UserDaoImpl;
 import util.SceneManager;
+import util.SecurityUtils;
+import util.UserSession;
 
 public class DashboardController {
 
-    private UserDaoImpl userDao = new UserDaoImpl();
+    private final UserSession session = UserSession.getInstance();
 
-    private String userEmail;
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-        try {
-			userId = userDao.getUserIdByEmail(userEmail);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+    @FXML
+    private void initialize() {
+        if (!session.isValid()) {
+            SceneManager.switchScene("/view/Login.fxml");
+        }
     }
-
-	private String userId;
-	public void setUserId(String id) {
-		this.userId = id;
-	}
 
     @FXML
     private void handleCadastroSenha() {
-        RegisterPasswordController controller = SceneManager.switchSceneWithController("/view/RegisterPassword.fxml");
-        controller.setUserId(userId);
+        validateSession();
+        SceneManager.switchScene("/view/RegisterPassword.fxml");
     }
 
     @FXML
     private void handleListarSenhas() {
-        ListPasswordsController controller = SceneManager.switchSceneWithController("/view/ListarPasswordsView.fxml");
-        controller.setUserId(userId);
+        validateSession();
+        SceneManager.switchScene("/view/ListarPasswordsView.fxml");
     }
 
     @FXML
     private void handleExcluirSenha() {
-        DeletePasswordController controller = SceneManager.switchSceneWithController("/view/DeletePasswordView.fxml");
-        controller.setUserId(userId);
+        validateSession();
+        SceneManager.switchScene("/view/DeletePasswordView.fxml");
     }
 
     @FXML
     private void handleGerarSenhaSegura() {
+        validateSession();
         SceneManager.switchScene("/view/GeneratePasswordView.fxml");
-        
     }
 
     @FXML
     private void handleVerificarSenha() {
-    	SceneManager.switchScene("/view/LeakCheckView.fxml");
+        validateSession();
+        SceneManager.switchScene("/view/LeakCheckView.fxml");
     }
 
     @FXML
     private void handleLogout() {
+        session.clearSession();
         SceneManager.switchScene("/view/Login.fxml");
+    }
+
+    private void validateSession() {
+        try {
+            SecurityUtils.validateRequiredFields(session.getUserId(), session.getUserEmail());
+            SecurityUtils.validateEmail(session.getUserEmail());
+        } catch (IllegalArgumentException e) {
+            handleLogout();
+            throw new IllegalStateException("Sessão inválida: " + e.getMessage());
+        }
     }
 }

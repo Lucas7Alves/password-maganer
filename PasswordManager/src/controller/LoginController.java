@@ -11,6 +11,8 @@ import model.dao.impl.UserDaoImpl;
 import service.AuthenticatorService;
 import service.EmailService;
 import util.SceneManager;
+import util.SecurityUtils;
+import util.UserSession;
 
 public class LoginController {
 
@@ -21,29 +23,45 @@ public class LoginController {
     private final AuthenticatorService authService = new AuthenticatorService();
     private final EmailService emailService = new EmailService();
     private final TokenDao tokenDao = new TokenDaoImpl();
-    
+    private final UserSession session = UserSession.getInstance();
     
     @FXML
     private void handleLogin() {
-        String email = emailField.getText();
-        String senha = passwordField.getText();
+        try {
+            String email = SecurityUtils.sanitizeInput(emailField.getText());
+            String senha = passwordField.getText(); // Senha não é sanitizada para permitir caracteres especiais
 
-        try {        	
-        	if (userDao.validateUser(email, senha)) {
-        		String token = authService.generateToken(email);
-        		emailService.sendTokenEmail(email, token);
-        		tokenDao.saveToken(userDao.getUserIdByEmail(email), token);
+            // Validações de segurança
+            SecurityUtils.validateRequiredFields(email, senha);
+            SecurityUtils.validateEmail(email);
 
-        		 TokenController controller = SceneManager.switchSceneWithController("/view/Token.fxml");
-                 controller.setUserEmail(email);
-        	} else {
-        		System.out.println("erro");
-        		showAlert("Login inválido", "E-mail ou senha incorretos.");
-        		System.out.println(userDao.findAll());
-        	}
+            if (userDao.validateUser(email, senha)) {
+                String token = authService.generateToken(email);
+                emailService.sendTokenEmail(email, token);
+                
+                String userId = String.valueOf(userDao.getUserIdByEmail(email));
+                if (userId == null || userId.equals("0")) {
+                    throw new IllegalStateException("ID de usuário inválido");
+                }
+                
+                tokenDao.saveToken(userId, token);
+                session.initSession(userId, email);
+
+                SceneManager.switchScene("/view/Token.fxml");
+            } else {
+                showAlert("Erro", "Credenciais inválidas", Alert.AlertType.ERROR);
+                auditFailedLoginAttempt(email);
+            }
+        } catch (IllegalArgumentException e) {
+            showAlert("Erro de Validação", e.getMessage(), Alert.AlertType.ERROR);
         } catch (Exception e) {
-        	System.err.println(e.getMessage());
-		}
+            showAlert("Erro", "Falha no login: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    private void auditFailedLoginAttempt(String email) {
+        System.out.println("Tentativa de login falhou para: " + SecurityUtils.sanitizeInput(email));
     }
 
     @FXML
@@ -51,10 +69,11 @@ public class LoginController {
         SceneManager.switchScene("/view/Cadastro.fxml");
     }
 
-    private void showAlert(String titulo, String mensagem) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setContentText(mensagem);
+    private void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }
