@@ -15,7 +15,7 @@ public class ConfigLoader {
 
     private static Properties props = null;
 
-    public static Properties getProperties() {
+    public static synchronized Properties getProperties() {
         if (props == null) {
             props = new Properties();
             try {

@@ -1,7 +1,7 @@
 package util;
 
 public class UserSession {
-    private static UserSession instance;
+	private static volatile UserSession instance;
     private String userId;
     private String userEmail;
 
@@ -9,7 +9,11 @@ public class UserSession {
 
     public static UserSession getInstance() {
         if (instance == null) {
-            instance = new UserSession();
+            synchronized (UserSession.class) {
+                if (instance == null) {
+                    instance = new UserSession();
+                }
+            }
         }
         return instance;
     }

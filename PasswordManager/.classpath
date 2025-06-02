@@ -6,6 +6,46 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx.base.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx.controls.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx.fxml.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx.graphics.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx.media.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx.swing.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx.web.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/java-libs/javafx-sdk-21.0.7/lib/javafx-swt.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/h2-2.3.232.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -26,6 +66,46 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx.base.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx.controls.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx.fxml.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx.graphics.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx.media.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx.swing.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx.web.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-swt.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/java-otp-0.3.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -37,46 +117,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/mysql-connector-j-9.0.0.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx.base.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx.controls.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx.fxml.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx.graphics.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx.media.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx.swing.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx.web.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/lucas/OneDrive/Desktop/manejadorSenha/password-maganer/PasswordManager/libs-jar/javafx-sdk-21.0.7/lib/javafx-swt.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
