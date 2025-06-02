@@ -1,9 +1,7 @@
 /**
- * 
- */
-/**
- * 
- */
+ 
+ 
+**/
 module PasswordManager {
 	requires jbcrypt;
 	requires com.h2database;
