@@ -1,41 +1,52 @@
 package service;
 
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.SQLException;
 
-import model.entity.User;
+import model.dao.impl.TokenDaoImpl;
+import model.dao.impl.UserDaoImpl;
 
+/**
+ * Responsável pela geração e validação de tokens de autenticação 2FA.
+ */
 public class AuthenticatorService {
 
-    private final Map<String, TokenInfo> tokenStore = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
+    private final TokenDaoImpl tokenDao = new TokenDaoImpl();
+    private final UserDaoImpl userDao = new UserDaoImpl();
 
-    
+    /**
+     * Gera um token aleatório de 6 dígitos e o associa a um usuário.
+     * @param email E-mail do usuário
+     * @return Token gerado em forma de string
+     */
     public String generateToken(String email) {
         int token = 100000 + random.nextInt(900000);
-        LocalDateTime expiresAt = LocalDateTime.now().plusMinutes(5);
-        tokenStore.put(email, new TokenInfo(String.valueOf(token), expiresAt));
-        return String.valueOf(token);
+        String strToken = null;
+        String userId;
+        try {
+            userId = userDao.getUserIdByEmail(email);
+            strToken = String.valueOf(token);
+            tokenDao.saveToken(userId, strToken);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return strToken;
     }
 
-    public boolean validateToken(String email, String token) {
-        if (!tokenStore.containsKey(email)) return false;
-
-        TokenInfo info = tokenStore.get(email);
-        if (LocalDateTime.now().isAfter(info.expiresAt)) return false;
-
-        return info.token.equals(token);
-    }
-
-    private static class TokenInfo {
-        String token;
-        LocalDateTime expiresAt;
-
-        TokenInfo(String token, LocalDateTime expiresAt) {
-            this.token = token;
-            this.expiresAt = expiresAt;
+    /**
+     * Valida se o token fornecido é válido para o usuário.
+     * @param userUid ID do usuário
+     * @param token Token a ser validado
+     * @return true se o token for válido, false caso contrário
+     */
+    public boolean validateToken(String userUid, String token) {
+        try {
+            return tokenDao.validateToken(userUid, token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

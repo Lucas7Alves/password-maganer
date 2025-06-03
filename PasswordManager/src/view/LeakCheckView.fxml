@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="controller.LeakCheckController"
+      prefWidth="400" prefHeight="300" stylesheets="@style.css">
+
+    <Label text="Verificar Vazamento de Senha" styleClass="title"/>
+
+    <TextField fx:id="passwordInput" promptText="Digite a senha para verificar"/>
+    <Label fx:id="resultLabel" styleClass="result"/>
+
+    <Button text="Verificar" onAction="#handleCheck"/>
+    <Button text="Voltar" onAction="#handleBack"/>
+</VBox>
