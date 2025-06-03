@@ -15,6 +15,9 @@ import util.SceneManager;
 import util.SecurityUtils;
 import util.UserSession;
 
+/**
+ * Controller responsável por listar as senhas salvas pelo usuário logado.
+ */
 public class ListPasswordsController {
 
     @FXML private TableView<PasswordEntry> passwordTable;
@@ -25,12 +28,18 @@ public class ListPasswordsController {
     private final PasswordDaoH2 dao = new PasswordDaoH2();
     private final UserSession session = UserSession.getInstance();
 
+    /**
+     * Inicializa a tela e carrega as senhas.
+     */
     @FXML
     private void initialize() {
         validateSession();
         loadPasswords();
     }
 
+    /**
+     * Carrega todas as senhas do usuário logado na tabela.
+     */
     private void loadPasswords() {
         try {
             String userId = session.getUserId();
@@ -50,11 +59,17 @@ public class ListPasswordsController {
         }
     }
 
+    /**
+     * Retorna à tela do Dashboard.
+     */
     @FXML
     private void handleBack() {
         SceneManager.switchScene("/view/Dashboard.fxml");
     }
 
+    /**
+     * Valida se a sessão do usuário está ativa.
+     */
     private void validateSession() {
         if (!session.isValid()) {
             SceneManager.switchScene("/view/Login.fxml");
@@ -62,6 +77,12 @@ public class ListPasswordsController {
         }
     }
 
+    /**
+     * Exibe um alerta na tela.
+     * @param title Título do alerta
+     * @param message Mensagem exibida
+     * @param type Tipo de alerta
+     */
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

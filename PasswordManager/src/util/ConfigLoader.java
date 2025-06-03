@@ -7,14 +7,23 @@ import java.nio.file.Files;
 import java.security.Key;
 import java.util.Properties;
 
+/**
+ * Utilitário para carregar um arquivo de configurações criptografado (config.enc),
+ * utilizando o algoritmo AES para descriptografia.
+ */
 public class ConfigLoader {
 
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES";
-    private static final String SECRET_KEY = "queroumemprego01"; 
+    private static final String SECRET_KEY = "queroumemprego01";
 
     private static Properties props = null;
 
+    /**
+     * Retorna as propriedades descriptografadas do arquivo config.enc.
+     *
+     * @return Objeto Properties com as configurações carregadas
+     */
     public static synchronized Properties getProperties() {
         if (props == null) {
             props = new Properties();

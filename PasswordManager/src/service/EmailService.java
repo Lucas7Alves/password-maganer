@@ -12,11 +12,19 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import util.ConfigLoader;
 
+/**
+ * Serviço responsável pelo envio de e-mails com o token 2FA.
+ */
 public class EmailService {
-	
-	private final String from;
-	private final String password;
 
+    private final String from;
+    private final String password;
+
+    /**
+     * Envia um e-mail com o token de autenticação 2FA.
+     * @param to E-mail do destinatário
+     * @param token Token a ser enviado
+     */
     public void sendTokenEmail(String to, String token) {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -29,7 +37,7 @@ public class EmailService {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(from, password);
             }
-            });
+        });
 
         try {
             Message message = new MimeMessage(session);
@@ -44,10 +52,13 @@ public class EmailService {
             throw new RuntimeException(e);
         }
     }
-    
-	public EmailService() {
-		Properties config = ConfigLoader.getProperties();
-		this.from = config.getProperty("EMAIL_FROM");
-		this.password = config.getProperty("EMAIL_PASSWORD");
-	}
+
+    /**
+     * Construtor que carrega as credenciais de e-mail do arquivo de configuração.
+     */
+    public EmailService() {
+        Properties config = ConfigLoader.getProperties();
+        this.from = config.getProperty("EMAIL_FROM");
+        this.password = config.getProperty("EMAIL_PASSWORD");
+    }
 }

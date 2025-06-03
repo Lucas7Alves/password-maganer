@@ -5,10 +5,16 @@ import util.SceneManager;
 import util.SecurityUtils;
 import util.UserSession;
 
+/**
+ * Controlador da tela de dashboard, que lida com as ações do usuário logado.
+ */
 public class DashboardController {
 
     private final UserSession session = UserSession.getInstance();
 
+    /**
+     * Inicializa o dashboard e redireciona para o login se a sessão for inválida.
+     */
     @FXML
     private void initialize() {
         if (!session.isValid()) {
@@ -16,6 +22,10 @@ public class DashboardController {
         }
     }
 
+    /**
+     * Ações de navegação para as telas do sistema.
+     * Cada método valida a sessão antes de redirecionar.
+     */
     @FXML
     private void handleCadastroSenha() {
         validateSession();
@@ -46,12 +56,20 @@ public class DashboardController {
         SceneManager.switchScene("/view/LeakCheckView.fxml");
     }
 
+    /**
+     * Finaliza a sessão do usuário e redireciona para o login.
+     */
     @FXML
     private void handleLogout() {
         session.clearSession();
         SceneManager.switchScene("/view/Login.fxml");
     }
 
+    /**
+     * Valida a sessão atual. Se inválida, encerra a sessão.
+     *
+     * @throws IllegalStateException se os dados da sessão forem inválidos.
+     */
     private void validateSession() {
         try {
             SecurityUtils.validateRequiredFields(session.getUserId(), session.getUserEmail());

@@ -11,6 +11,9 @@ import util.SceneManager;
 import util.SecurityUtils;
 import util.UserSession;
 
+/**
+ * Controller responsável por cadastrar novas senhas para o usuário.
+ */
 public class RegisterPasswordController {
 
     @FXML private TextField serviceNameField;
@@ -21,6 +24,9 @@ public class RegisterPasswordController {
     private final PasswordDaoH2 passwordDaoH2 = new PasswordDaoH2();
     private final UserSession session = UserSession.getInstance();
 
+    /**
+     * Verifica se o usuário está logado ao inicializar a tela.
+     */
     @FXML
     private void initialize() {
         if (!session.isValid()) {
@@ -28,6 +34,9 @@ public class RegisterPasswordController {
         }
     }
 
+    /**
+     * Registra uma nova senha para o usuário logado.
+     */
     @FXML
     private void handleRegister() {
         try {
@@ -52,11 +61,19 @@ public class RegisterPasswordController {
         }
     }
 
+    /**
+     * Retorna para o dashboard.
+     */
     @FXML
     private void handleBack() {
         SceneManager.switchScene("/view/Dashboard.fxml");
     }
 
+    /**
+     * Exibe feedback na tela ou em alerta.
+     * @param message Mensagem a ser exibida
+     * @param type Tipo de mensagem
+     */
     private void showFeedback(String message, Alert.AlertType type) {
         if (type == Alert.AlertType.INFORMATION) {
             feedbackLabel.setText(message);
@@ -69,6 +86,10 @@ public class RegisterPasswordController {
         }
     }
 
+
+    /**
+     * Limpa os campos do formulário.
+     */
     private void clearFields() {
         serviceNameField.clear();
         usernameField.clear();

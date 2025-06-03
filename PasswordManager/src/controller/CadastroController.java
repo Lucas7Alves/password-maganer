@@ -10,6 +10,9 @@ import model.entity.User;
 import util.SceneManager;
 import util.SecurityUtils;
 
+/**
+ * Controlador responsável pelo cadastro de novos usuários.
+ */
 public class CadastroController {
 
     @FXML private TextField nomeField;
@@ -18,6 +21,10 @@ public class CadastroController {
 
     private final UserDaoImpl userDao = new UserDaoImpl();
 
+    /**
+     * Lida com a ação de cadastro do usuário.
+     * Realiza validações e envia os dados ao banco.
+     */
     @FXML
     private void handleCadastro() {
         try {
@@ -46,11 +53,21 @@ public class CadastroController {
         }
     }
 
+    /**
+     * Volta para a tela de login.
+     */
     @FXML
     private void handleVoltar() {
         SceneManager.switchScene("/view/Login.fxml");
     }
 
+    /**
+     * Exibe um alerta genérico na interface.
+     *
+     * @param titulo Título do alerta.
+     * @param mensagem Mensagem a ser exibida.
+     * @param tipo Tipo do alerta (INFORMATION, ERROR, etc).
+     */
     private void showAlert(String titulo, String mensagem, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
